@@ -53,7 +53,7 @@ class block_lastcourse extends block_base {
            {
               if ($i>0)
                  break;
-              $Cours = 'http:/'.$_SERVER['HTTP_HOST'].'/course/view.php?id='.$record->courseid;
+              $Cours = '/course/view.php?id='.$record->courseid;
               $i++;
            }
            $urlCours = new moodle_url($Cours);
@@ -70,7 +70,7 @@ class block_lastcourse extends block_base {
               {
                  if ($j>0)
                     break;
-                 $Asset = 'http:/'.$_SERVER['HTTP_HOST'].'/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
+                 $Asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
                  $j++;
               }
               $urlAsset = new moodle_url($Asset);
