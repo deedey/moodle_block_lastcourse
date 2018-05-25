@@ -42,7 +42,7 @@ class block_lastcourse extends block_base {
             $lastcourse = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
                array('viewed', 'course', $USER->id));
-            $i=0;
+            $i = 0;
             foreach($lastcourse as $record)
             {
                 if ($i > 0)
@@ -51,18 +51,17 @@ class block_lastcourse extends block_base {
                 $i++;
             }
             $urlcours = new moodle_url($cours);
-            $this->content->text = html_writer::link($urlcours,get_string('lastcourse_mylastcourse', 'block_lastcourse'), array('target' => '_self'));
+            $this->content->text = html_writer::link($urlcours, get_string('lastcourse_mylastcourse', 'block_lastcourse'), array('target' => '_self'));
             $veriflastasset = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                            'target' => "course_module", 'userid' => $USER->id));
             if ($veriflastasset > 0) {
                 $lastasset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                    'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
-                $j=0;
-                foreach($lastasset as $record)
-                {
-                    if ($j>0)
+                $j = 0;
+                foreach($lastasset as $record){
+                    if ($j > 0)
                        break;
-                    $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record -> contextinstanceid;
+                    $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
                     $j++;
                 }
                 $urlasset = new moodle_url($asset);
