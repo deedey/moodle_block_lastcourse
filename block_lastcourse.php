@@ -34,7 +34,7 @@ class block_lastcourse extends block_base {
         $veriflastcourse = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                     'target' => "course", 'userid' => $USER->id));
         $this->content = new stdClass();
-        if ($veriflastcourse == 0){
+        if ($veriflastcourse == 0) {
             $this->content->text = html_writer::div('<span style="color:#FF0000;font-weight: bold;"'.
                  ' title="'.get_string('lastcourse_courselearned', 'block_lastcourse').'">'.
                  get_string('lastcourse_nocourse', 'block_lastcourse').'</span>');
@@ -43,8 +43,7 @@ class block_lastcourse extends block_base {
                'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
                array('viewed', 'course', $USER->id));
             $i = 0;
-            foreach($lastcourse as $record)
-            {
+            foreach($lastcourse as $record) {
                 if ($i > 0)
                     break;
                 $cours = '/course/view.php?id='.$record->courseid;
@@ -58,7 +57,7 @@ class block_lastcourse extends block_base {
                 $lastasset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                    'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
                 $j = 0;
-                foreach($lastasset as $record){
+                foreach($lastasset as $record) {
                     if ($j > 0)
                        break;
                     $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
