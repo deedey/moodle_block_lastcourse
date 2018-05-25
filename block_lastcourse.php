@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * 
+ *
  *
  * @package    block_lastcourse
  * @copyright  2018 Dey Bendifallah
@@ -34,44 +34,40 @@ class block_lastcourse extends block_base {
         $verif_last_course = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                     'target' => "course", 'userid' => $USER->id));
         $this->content = new stdClass();
-        if ($verif_last_course == 0)
-        {
+        if ($veriflastcourse == 0){
             $this->content->text = html_writer::div('<span style="color:#FF0000;font-weight: bold;"'.
                  ' title="'.get_string('lastcourse_courselearned', 'block_lastcourse').'">'.
                  get_string('lastcourse_nocourse', 'block_lastcourse').'</span>');
-        }
-        else
-        {
-           $last_course = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
+        } else {
+            $lastcourse = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
-               array('viewed', 'course',$USER->id));
-           $i=0;
-           foreach($last_course as $record)
-           {
-              if ($i>0)
-                 break;
-              $cours = '/course/view.php?id='.$record->courseid;
-              $i++;
-           }
-           $urlcours = new moodle_url($cours);
-           $this->content->text = html_writer::link($urlcours,get_string('lastcourse_mylastcourse', 'block_lastcourse'), array('target' => '_self'));
-           $verif_last_asset = $DB->count_records('logstore_standard_log', array('action' => "viewed",
-                           'target' => "course_module", 'userid' => $USER->id));
-           if ($verif_last_asset > 0)
-           {
-              $last_asset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
-                   'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
-              $j=0;
-              foreach($last_asset as $record)
-              {
-                 if ($j>0)
+               array('viewed', 'course', $USER->id));
+            $i=0;
+            foreach($lastcourse as $record)
+            {
+                if ($i > 0)
                     break;
-                 $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
-                 $j++;
-              }
-              $url_asset = new moodle_url($asset);
-              $this->content->text .= html_writer::link($url_asset, "<br>".get_string('lastcourse_mylastmodule', 'block_lastcourse'), array('target' => '_self'));
-           }
+                $cours = '/course/view.php?id='.$record->courseid;
+                $i++;
+            }
+            $urlcours = new moodle_url($cours);
+            $this->content->text = html_writer::link($urlcours,get_string('lastcourse_mylastcourse', 'block_lastcourse'), array('target' => '_self'));
+            $veriflastasset = $DB->count_records('logstore_standard_log', array('action' => "viewed",
+                           'target' => "course_module", 'userid' => $USER->id));
+            if ($veriflastasset > 0) {
+                $lastasset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
+                   'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
+                $j=0;
+                foreach($lastasset as $record)
+                {
+                    if ($j>0)
+                       break;
+                    $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record -> contextinstanceid;
+                    $j++;
+                }
+                $urlasset = new moodle_url($asset);
+                $this->content->text .= html_writer::link($urlasset, "<br>".get_string('lastcourse_mylastmodule', 'block_lastcourse'), array('target' => '_self'));
+            }
         }
         $this->content->footer = '';
         return $this->content;
