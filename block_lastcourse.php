@@ -43,7 +43,7 @@ class block_lastcourse extends block_base {
                'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
                array('viewed', 'course', $USER->id));
             $i = 0;
-            foreach($lastcourse as $record) {
+            foreach ($lastcourse as $record) {
                 if ($i > 0)
                     break;
                 $cours = '/course/view.php?id='.$record->courseid;
@@ -57,7 +57,7 @@ class block_lastcourse extends block_base {
                 $lastasset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                    'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
                 $j = 0;
-                foreach($lastasset as $record) {
+                foreach ($lastasset as $record) {
                     if ($j > 0)
                        break;
                     $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
