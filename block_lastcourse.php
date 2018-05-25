@@ -1,10 +1,6 @@
 <?php
 // This file is part of Moodle - http://moodle.org/
 //
-//
-// This file and block dependencies needs a free subscription to http://lrs.annulab.com
-//
-
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -19,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * annulabLRS block.
+ * 
  *
- * @package    block_xapi_lrs
- * @copyright  1999 onwards Martin Dougiamas (http://dougiamas.com)
+ * @package    block_lastcourse
+ * @copyright  2018 Dey Bendifallah
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -34,7 +30,7 @@ class block_lastcourse extends block_base {
 
     public function get_content() {
         global $USER, $_SERVER, $DB, $CFG;
-        $VerifLastCourse = $DB->count_records('logstore_standard_log',array('action' => "viewed",
+        $VerifLastCourse = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                     'target' => "course", 'userid' => $USER->id));
         $this->content = new stdClass();
         if ($VerifLastCourse == 0)
@@ -82,4 +78,3 @@ class block_lastcourse extends block_base {
         return $this->content;
     }
 }
-?>
