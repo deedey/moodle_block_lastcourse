@@ -30,11 +30,11 @@ class block_lastcourse extends block_base {
     }
 
     public function get_content() {
-        global $USER, $_SERVER, $DB, $CFG;
-        $VerifLastCourse = $DB->count_records('logstore_standard_log', array('action' => "viewed",
+        global $USER, $DB, $CFG;
+        $verif_last_course = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                     'target' => "course", 'userid' => $USER->id));
         $this->content = new stdClass();
-        if ($VerifLastCourse == 0)
+        if ($verif_last_course == 0)
         {
             $this->content->text = html_writer::div('<span style="color:#FF0000;font-weight: bold;"'.
                  ' title="'.get_string('lastcourse_courselearned', 'block_lastcourse').'">'.
@@ -42,37 +42,35 @@ class block_lastcourse extends block_base {
         }
         else
         {
-           $LastCourse = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
+           $last_course = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
                'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
                array('viewed', 'course',$USER->id));
            $i=0;
-           foreach($LastCourse as $record)
+           foreach($last_course as $record)
            {
               if ($i>0)
                  break;
-              $Cours = '/course/view.php?id='.$record->courseid;
+              $cours = '/course/view.php?id='.$record->courseid;
               $i++;
            }
-           $urlCours = new moodle_url($Cours);
-           $this->content->text = html_writer::link($urlCours,get_string('lastcourse_mylastcourse', 'block_lastcourse'),array('target' => '_self'));
-           $VerifLastAsset = $DB->count_records('logstore_standard_log',array('action' => "viewed",
+           $urlcours = new moodle_url($cours);
+           $this->content->text = html_writer::link($urlcours,get_string('lastcourse_mylastcourse', 'block_lastcourse'), array('target' => '_self'));
+           $verif_last_asset = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                            'target' => "course_module", 'userid' => $USER->id));
-           if ($VerifLastAsset > 0)
+           if ($verif_last_asset > 0)
            {
-              $LastAsset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
-                   'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
-                   array('viewed', 'course_module',$USER->id));
+              $last_asset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
+                   'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
               $j=0;
-              foreach($LastAsset as $record)
+              foreach($last_asset as $record)
               {
                  if ($j>0)
                     break;
-                 $Asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
+                 $asset = '/mod/'.$record->objecttable.'/view.php?id='.$record->contextinstanceid;
                  $j++;
               }
-              $urlAsset = new moodle_url($Asset);
-              $this->content->text .= html_writer::link($urlAsset,"<br>".get_string('lastcourse_mylastmodule', 'block_lastcourse'),
-                                      array('target' => '_self'));
+              $url_asset = new moodle_url($asset);
+              $this->content->text .= html_writer::link($url_asset, "<br>".get_string('lastcourse_mylastmodule', 'block_lastcourse'), array('target' => '_self'));
            }
         }
         $this->content->footer = '';
