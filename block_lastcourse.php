@@ -40,7 +40,7 @@ class block_lastcourse extends block_base {
                  get_string('lastcourse_nocourse', 'block_lastcourse').'</span>');
         } else {
             $lastcourse = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
-               'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0,1',
+               'action = ?  AND target = ? AND userid = ? order by timecreated desc',
                array('viewed', 'course', $USER->id));
             $i = 0;
             foreach ($lastcourse as $record) {
@@ -55,7 +55,7 @@ class block_lastcourse extends block_base {
                            'target' => "course_module", 'userid' => $USER->id));
             if ($veriflastasset > 0) {
                 $lastasset = $DB->get_records_sql('SELECT * FROM {logstore_standard_log} WHERE '.
-                   'action = ?  AND target = ? AND userid = ? order by timecreated desc limit 0, 1', array('viewed', 'course_module', $USER->id));
+                   'action = ?  AND target = ? AND userid = ? order by timecreated desc', array('viewed', 'course_module', $USER->id));
                 $j = 0;
                 foreach ($lastasset as $record) {
                     if ($j > 0)
