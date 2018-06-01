@@ -31,6 +31,11 @@ class block_lastcourse extends block_base {
 
     public function get_content() {
         global $USER, $DB;
+        
+        if ($this->content !== null) {
+            return $this->content;
+        }
+        
         $veriflastcourse = $DB->count_records('logstore_standard_log', array('action' => "viewed",
                     'target' => "course", 'userid' => $USER->id));
         $this->content = new stdClass();
