@@ -25,3 +25,4 @@ $string['lastcourse:addinstance'] = 'Add  a block Last course';
 $string['lastcourse_nocourse'] = 'Any course launched.';
 $string['lastcourse_mylastcourse'] = 'My last launched course.';
 $string['lastcourse_mylastmodule'] = 'My last launched module.';
+$string['privacy:metadata'] = 'The block_lastcourse plugin does not store any personal data.';
