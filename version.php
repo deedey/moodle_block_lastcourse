@@ -23,8 +23,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-$plugin->release = '1.0.1 (Build: 2018061700)';
-$plugin->version   = 2018061700;
+$plugin->release = '1.0.2 (Build: 2019011700)';
+$plugin->version   = 2019011700;
 $plugin->requires  = 2015051109;
 $plugin->component = 'block_lastcourse';
 $plugin->maturity = MATURITY_STABLE;
